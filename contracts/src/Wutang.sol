@@ -3,7 +3,7 @@
 pragma solidity ^0.8.1;
 
 //OpenZeppelin contracts for ERC721. We dont need to write the contracts by hand but we can if we wanted to to make it more efficent if possible i.e. ERC721A.
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
@@ -15,6 +15,8 @@ contract NFT is ERC721URIStorage {
 
     constructor() ERC721("Wu-Tang On Chain", "Wu-Tang Name") {}
 
+    string firstName;
+    string secondName;
     string baseSvg =
         "<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMinYMin meet' viewBox='0 0 350 350'><style>.base { fill: white; font-family: serif; font-size: 24px; }</style><rect width='100%' height='100%' fill='black' /><text x='50%' y='50%' class='base' dominant-baseline='middle' text-anchor='middle'>";
 
