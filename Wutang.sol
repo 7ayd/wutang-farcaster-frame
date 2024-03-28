@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.1;
 
+//OpenZeppelin contracts for ERC721. We dont need to write the contracts by hand but we can if we wanted to to make it more efficent if possible i.e. ERC721A.
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
@@ -31,7 +32,8 @@ contract NFT is ERC721URIStorage {
         "Thunderous ",
         "Childish ",
         "Ol' ",
-        "Based"
+        "Based",
+        "Childish"
     ];
     string[] secondWords = [
         "Mastermind",
@@ -41,31 +43,32 @@ contract NFT is ERC721URIStorage {
         "Killah",
         "Swami",
         "Punk",
-        "Normie",
+        "Bastard",
         "Observer",
         "Overlord",
         "Ape",
         "Viking",
         "Mogul",
         "Degen",
-        "Fren"
+        "Fren",
+        "Gambino"
     ];
 
     function pickRandomFirstWord(
-        uint256 tokenId
+        string calldata name
     ) public view returns (string memory) {
         uint256 rand = uint256(
-            keccak256(abi.encodePacked(blockhash(block.number - 1), tokenId))
+            keccak256(abi.encodePacked(blockhash(block.number - 1), name))
         );
         rand = rand % firstWords.length;
         return firstWords[rand];
     }
 
     function pickRandomSecondWord(
-        uint256 tokenId
+        string calldata name
     ) public view returns (string memory) {
         uint256 rand = uint256(
-            keccak256(abi.encodePacked(blockhash(block.number - 1), tokenId))
+            keccak256(abi.encodePacked(blockhash(block.number - 1), name))
         );
         rand = rand % secondWords.length;
         return secondWords[rand];
@@ -75,12 +78,15 @@ contract NFT is ERC721URIStorage {
         return uint256(keccak256(abi.encodePacked(input)));
     }
 
-    function makeNFT() public {
+    function makeNFT(
+        string calldata firstName,
+        string calldata lastName
+    ) public {
         // Grabs the current token ID
         uint256 newItemID = _tokenIds.current();
 
-        string memory first = pickRandomFirstWord(newItemID);
-        string memory second = pickRandomSecondWord(newItemID);
+        string memory first = pickRandomFirstWord(firstName);
+        string memory second = pickRandomSecondWord(lastName);
         string memory combinedWord = string(abi.encodePacked(first, second));
 
         string memory finalSvg = string(
